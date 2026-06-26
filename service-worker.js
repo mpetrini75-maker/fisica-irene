@@ -1,4 +1,4 @@
-const CACHE = 'fisica-irene-v1';
+const CACHE = 'fisica-irene-v2';
 
 const ASSETS = [
   './',
@@ -13,6 +13,7 @@ const ASSETS = [
   './forze-allenamento.html',
   './style.css',
   './app.js',
+  './alert.js',
   './manifest.json',
   './icon-180.png',
   './icon-192.png',

@@ -8,6 +8,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Fisica di Irene">
+<script src="alert.js"></script>
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <title>Le forze — Allenamento</title>
@@ -127,6 +128,7 @@
       html+=`<b>Bravissima! Livello ${level+2} sbloccato 🔓</b><br>`;
       html+=`<button class="restart" onclick="${setFnName}(${level+1})">➡️ Vai al Livello ${level+2}</button>`;
     } else if(passed && level===3){
+      if(window.segnaSezioneAllenamento) segnaSezioneAllenamento(setFnName);
       html+=`<b>🏆 Hai completato tutti i livelli!</b><br>`;
       html+=`<button class="restart" onclick="${setFnName}(0)">🔄 Rigioca dal Livello 1</button>`;
     } else {
