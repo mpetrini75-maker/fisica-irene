@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FAF6EE">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Fisica di Irene">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<title>Descrivere i movimenti — Allenamento</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAF6EE; --card:#FFFFFF; --ink:#2F2A24;
+    --accent:#2E6B8F; --accent-soft:#DCEAF2;
+    --green:#3E8E5A; --green-soft:#E2F0E6;
+    --red:#C2492F; --red-soft:#F6E1DB;
+    --blue:#3B6EA5; --blue-soft:#E2ECF5;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; font-family:"Lexend","Trebuchet MS",Verdana,sans-serif;
+    background:var(--bg); color:var(--ink); line-height:1.7; letter-spacing:0.3px; padding:24px 14px 60px;}
+  .wrap{max-width:620px;margin:0 auto;}
+  h1{color:var(--accent);font-size:1.6rem;text-align:center;margin:0 0 6px;}
+  .sub{text-align:center;color:#8a7f70;margin:0 0 26px;font-size:1rem;}
+  .card{background:var(--card);border-radius:18px;padding:22px 20px;margin-bottom:22px;
+    box-shadow:0 4px 14px rgba(0,0,0,0.06);border:1px solid #efe7da;}
+  .card h2{margin:0 0 10px;font-size:1.25rem;color:var(--accent);display:flex;align-items:center;gap:8px;}
+  .card .lead{color:#8a7f70;margin:0 0 12px;font-size:0.97rem;}
+  .levelbar{margin:0 0 12px;}
+  .lvrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:0.98rem;color:var(--accent);}
+  .lvdots{display:inline-flex;gap:6px;}
+  .lvdot{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    background:var(--bg);border:2px solid var(--accent-soft);color:#b9ad9c;font-size:0.85rem;font-weight:bold;}
+  .lvdot.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);}
+  .ex{margin:14px 0;}
+  .qnum{font-weight:bold;color:var(--accent);}
+  .qtext{font-size:1.1rem;margin:6px 0 8px;}
+  .options{display:flex;flex-direction:column;gap:10px;}
+  .opt{background:var(--bg);border:2px solid var(--accent-soft);
+    border-radius:12px;padding:13px 14px;font-size:1.05rem;cursor:pointer;
+    text-align:left;font-family:inherit;color:var(--ink);transition:all .15s;}
+  .opt:hover{border-color:var(--accent);}
+  .opt.correct{background:var(--green-soft);border-color:var(--green);color:var(--green);font-weight:bold;}
+  .opt.wrong{background:var(--red-soft);border-color:var(--red);color:var(--red);}
+  .feedback{margin-top:10px;font-size:1.02rem;font-weight:bold;min-height:24px;}
+  .feedback.ok{color:var(--green);}
+  .feedback.no{color:var(--red);}
+  .progress{text-align:center;font-size:1.05rem;margin:12px 0 0;color:#8a7f70;}
+  .star{font-size:1.4rem;}
+  .calc-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px;}
+  .write-input{flex:1;min-width:120px;font-family:"Lexend",sans-serif;font-size:1.2rem;
+    padding:12px 14px;border:2px solid var(--accent-soft);border-radius:12px;
+    background:var(--bg);color:var(--ink);}
+  .write-input:focus{outline:none;border-color:var(--accent);}
+  .unit{font-size:1.1rem;color:#8a7f70;font-weight:bold;}
+  .checkbtn{margin-top:10px;background:var(--accent);color:#fff;border:none;
+    border-radius:12px;padding:10px 20px;font-size:1rem;cursor:pointer;font-family:inherit;}
+  .write-input.okbox{border-color:var(--green);background:var(--green-soft);}
+  .write-input.nobox{border-color:var(--red);}
+  .match-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px;}
+  .match-col{display:flex;flex-direction:column;gap:10px;}
+  .match-btn{background:var(--bg);border:2px solid var(--accent-soft);border-radius:12px;
+    padding:12px;font-size:0.98rem;cursor:pointer;font-family:inherit;color:var(--ink);
+    display:flex;align-items:center;justify-content:center;text-align:center;gap:6px;transition:all .15s;}
+  .match-btn:hover{border-color:var(--accent);}
+  .match-btn.sel{border-color:var(--blue);background:var(--blue-soft);color:var(--blue);font-weight:bold;}
+  .match-btn.done{background:var(--green-soft);border-color:var(--green);color:var(--green);
+    font-weight:bold;cursor:default;opacity:0.85;}
+  .match-btn.flash{border-color:var(--red);background:var(--red-soft);}
+  .restart{display:inline-block;margin:12px auto 0;background:var(--accent);color:#fff;border:none;
+    border-radius:12px;padding:11px 22px;font-size:1rem;cursor:pointer;font-family:inherit;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a href="index.html" style="display:inline-block;background:#DCEAF2;color:#2E6B8F;text-decoration:none;border-radius:12px;padding:8px 16px;font-size:0.98rem;font-weight:bold;margin-bottom:14px;">&larr; Indice</a>
+  <h1>🏋️ Descrivere i movimenti — Allenamento</h1>
+  <p class="sub">Mattoncino 3 · 3 sezioni · 4 livelli ciascuna 🚀</p>
+
+  <div class="card">
+    <h2>🧮 1. Calcoli</h2>
+    <p class="lead">Scrivi solo il numero (usa la virgola se serve, es. 0,5). Poi tocca "Controlla". Se sbagli ti spiego come si fa!</p>
+    <div class="levelbar" id="calc-level"></div>
+    <div id="calc-list"></div>
+    <div class="progress" id="calc-prog"></div>
+  </div>
+
+  <div class="card">
+    <h2>🧠 2. Concetti</h2>
+    <p class="lead">Scegli la risposta giusta. Puoi riprovare finché non la trovi!</p>
+    <div class="levelbar" id="quiz-level"></div>
+    <div id="quiz-box"></div>
+    <div class="progress" id="quiz-prog"></div>
+  </div>
+
+  <div class="card">
+    <h2>🔗 3. Abbina</h2>
+    <p class="lead">Tocca una casella a sinistra, poi la sua coppia a destra. Collega tutte le coppie!</p>
+    <div class="levelbar" id="match-level"></div>
+    <div class="match-grid" id="match-grid"></div>
+    <div class="progress" id="match-prog"></div>
+  </div>
+</div>
+
+<script>
+  function stars(correct,total){
+    const pct=correct/total;
+    const n=pct===1?5:pct>=0.75?4:pct>=0.5?3:pct>=0.25?2:1;
+    return "⭐".repeat(n);
+  }
+  const LV=["Base","Intermedio","Avanzato","Sfida"];
+  function levelBar(level){
+    let dots="";
+    for(let i=0;i<4;i++) dots+=`<span class="lvdot ${i<=level?'on':''}">${i+1}</span>`;
+    return `<div class="lvrow"><b>Livello ${level+1} di 4 · ${LV[level]} 🔓</b><span class="lvdots">${dots}</span></div>`;
+  }
+  function levelResult(progEl, score, total, level, threshold, setFnName){
+    const passed = score>=threshold;
+    let html=`<div class="star">${stars(score,total)}</div>${score}/${total} giuste<br>`;
+    if(passed && level<3){
+      html+=`<b>Bravissima! Livello ${level+2} sbloccato 🔓</b><br>`;
+      html+=`<button class="restart" onclick="${setFnName}(${level+1})">➡️ Vai al Livello ${level+2}</button>`;
+    } else if(passed && level===3){
+      html+=`<b>🏆 Hai completato tutti i livelli!</b><br>`;
+      html+=`<button class="restart" onclick="${setFnName}(0)">🔄 Rigioca dal Livello 1</button>`;
+    } else {
+      html+=`<b>Ci sei quasi! Riprova questo livello, ce la fai 🌱</b><br>`;
+      html+=`<button class="restart" onclick="${setFnName}(${level})">🔄 Rifai il Livello ${level+1}</button>`;
+    }
+    progEl.innerHTML=html;
+  }
+  function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+  /* ============ SEZIONE 1 — CALCOLI ============ */
+  const calcLevels = [
+    [ // L1 — velocità base: v = s/t, s = v×t, t = s/v
+      {q:"Un'auto percorre <b>100 m</b> in <b>20 s</b>. Velocità media v = ____", a:5, unit:"m/s", sol:"v = s ÷ t = 100 ÷ 20 = 5 m/s."},
+      {q:"Un ciclista percorre <b>60 m</b> in <b>12 s</b>. v = ____", a:5, unit:"m/s", sol:"v = 60 ÷ 12 = 5 m/s."},
+      {q:"Un oggetto va a <b>v = 10 m/s</b> per <b>t = 5 s</b>. Spazio s = ____", a:50, unit:"m", sol:"s = v × t = 10 × 5 = 50 m."},
+      {q:"Un treno va a <b>v = 30 m/s</b> per <b>t = 4 s</b>. Spazio s = ____", a:120, unit:"m", sol:"s = 30 × 4 = 120 m."},
+      {q:"Spazio <b>s = 200 m</b>, velocità <b>v = 8 m/s</b>. Tempo t = ____", a:25, unit:"s", sol:"t = s ÷ v = 200 ÷ 8 = 25 s."},
+      {q:"Spazio <b>s = 150 m</b>, velocità <b>v = 5 m/s</b>. Tempo t = ____", a:30, unit:"s", sol:"t = 150 ÷ 5 = 30 s."},
+    ],
+    [ // L2 — MRU + conversioni km/h ↔ m/s
+      {q:"Converti <b>72 km/h</b> in m/s. (÷ 3,6) v = ____", a:20, unit:"m/s", sol:"72 ÷ 3,6 = 20 m/s."},
+      {q:"Converti <b>36 km/h</b> in m/s. v = ____", a:10, unit:"m/s", sol:"36 ÷ 3,6 = 10 m/s."},
+      {q:"MRU: <b>v = 15 m/s</b>, <b>t = 4 s</b>. s = ____", a:60, unit:"m", sol:"s = 15 × 4 = 60 m."},
+      {q:"MRU: <b>v = 20 m/s</b>, <b>t = 3 s</b>. s = ____", a:60, unit:"m", sol:"s = 20 × 3 = 60 m."},
+      {q:"MRU: <b>s = 90 m</b>, <b>v = 18 m/s</b>. t = ____", a:5, unit:"s", sol:"t = 90 ÷ 18 = 5 s."},
+      {q:"MRU: <b>s = 400 m</b>, <b>t = 80 s</b>. v = ____", a:5, unit:"m/s", sol:"v = 400 ÷ 80 = 5 m/s."},
+    ],
+    [ // L3 — accelerazione: a = Δv/Δt
+      {q:"<b>v₀ = 0</b>, <b>v_f = 20 m/s</b>, <b>t = 4 s</b>. Accelerazione a = ____", a:5, unit:"m/s²", sol:"a = (20 − 0) ÷ 4 = 5 m/s²."},
+      {q:"<b>v₀ = 10 m/s</b>, <b>v_f = 30 m/s</b>, <b>t = 5 s</b>. a = ____", a:4, unit:"m/s²", sol:"a = (30 − 10) ÷ 5 = 20 ÷ 5 = 4 m/s²."},
+      {q:"<b>v₀ = 0</b>, <b>v_f = 30 m/s</b>, <b>t = 6 s</b>. a = ____", a:5, unit:"m/s²", sol:"a = 30 ÷ 6 = 5 m/s²."},
+      {q:"<b>v₀ = 5 m/s</b>, <b>v_f = 25 m/s</b>, <b>t = 4 s</b>. a = ____", a:5, unit:"m/s²", sol:"a = (25 − 5) ÷ 4 = 20 ÷ 4 = 5 m/s²."},
+      {q:"<b>a = 3 m/s²</b>, <b>t = 4 s</b>. Variazione di velocità Δv = ____", a:12, unit:"m/s", sol:"Δv = a × t = 3 × 4 = 12 m/s."},
+      {q:"<b>v₀ = 0</b>, <b>v_f = 20 m/s</b>, <b>a = 4 m/s²</b>. Tempo t = ____", a:5, unit:"s", sol:"t = Δv ÷ a = 20 ÷ 4 = 5 s."},
+    ],
+    [ // L4 — MUA completo
+      {q:"MUA: <b>v₀ = 2 m/s</b>, <b>a = 3 m/s²</b>, <b>t = 4 s</b>. Velocità finale v = ____", a:14, unit:"m/s", sol:"v = v₀ + at = 2 + 3×4 = 2 + 12 = 14 m/s."},
+      {q:"MUA da fermo: <b>a = 5 m/s²</b>, <b>t = 6 s</b>. v = ____", a:30, unit:"m/s", sol:"v = 0 + 5×6 = 30 m/s."},
+      {q:"MUA da fermo: <b>a = 2 m/s²</b>, <b>t = 4 s</b>. Spazio s = ____", a:16, unit:"m", sol:"s = ½ × a × t² = ½ × 2 × 16 = 16 m."},
+      {q:"MUA da fermo: <b>a = 10 m/s²</b>, <b>t = 3 s</b>. s = ____", a:45, unit:"m", sol:"s = ½ × 10 × 9 = 45 m."},
+      {q:"MUA: <b>v₀ = 5 m/s</b>, <b>a = 2 m/s²</b>, <b>t = 3 s</b>. s = ____", a:24, unit:"m", sol:"s = 5×3 + ½×2×9 = 15 + 9 = 24 m."},
+      {q:"MUA da fermo: <b>a = 2 m/s²</b>, <b>s = 25 m</b>. Velocità finale v = ____", a:10, unit:"m/s", sol:"v² = 2×2×25 = 100 → v = √100 = 10 m/s."},
+    ],
+  ];
+  let cLevel=0, calcDone=[];
+  function parseNum(s){ return parseFloat(String(s).trim().replace(",",".").replace(/\s+/g,"")); }
+  function setCalcLevel(lvl){
+    cLevel=lvl;
+    const data=calcLevels[lvl];
+    calcDone=new Array(data.length).fill(false);
+    document.getElementById("calc-level").innerHTML=levelBar(lvl);
+    document.getElementById("calc-prog").textContent=`Completati 0 di ${data.length}`;
+    const list=document.getElementById("calc-list");
+    list.innerHTML=data.map((it,i)=>`
+      <div class="ex">
+        <div class="qnum">Calcolo ${i+1}</div>
+        <div class="qtext">${it.q}</div>
+        <div class="calc-row">
+          <input class="write-input" id="ci${i}" type="text" inputmode="decimal" autocomplete="off" placeholder="numero…">
+          <span class="unit">${it.unit}</span>
+        </div>
+        <button class="checkbtn" onclick="checkCalc(${i})">Controlla</button>
+        <div class="feedback" id="cfb${i}"></div>
+      </div>`).join("");
+  }
+  function checkCalc(i){
+    const it=calcLevels[cLevel][i];
+    const inp=document.getElementById("ci"+i);
+    const fb=document.getElementById("cfb"+i);
+    const val=parseNum(inp.value);
+    const ok = !isNaN(val) && Math.abs(val - it.a) < 0.05;
+    if(ok){
+      inp.classList.add("okbox"); inp.classList.remove("nobox");
+      fb.innerHTML="✅ Perfetto! "+it.sol; fb.className="feedback ok";
+    } else {
+      inp.classList.add("nobox");
+      fb.innerHTML=`💛 Quasi! ${it.sol}<br>La risposta è: <b>${String(it.a).replace(".",",")} ${it.unit}</b>`;
+      fb.className="feedback no";
+    }
+    if(!calcDone[i]){ calcDone[i]=true; updateCalc(); }
+  }
+  function updateCalc(){
+    const data=calcLevels[cLevel];
+    const pr=document.getElementById("calc-prog");
+    const done=calcDone.filter(Boolean).length;
+    if(done<data.length){ pr.textContent=`Completati ${done} di ${data.length}`; return; }
+    let correct=0;
+    data.forEach((_,i)=>{ if(document.getElementById("ci"+i).classList.contains("okbox")) correct++; });
+    levelResult(pr, correct, data.length, cLevel, 4, "setCalcLevel");
+  }
+
+  /* ============ SEZIONE 2 — CONCETTI ============ */
+  const quizLevels = [
+    [ // L1 — grandezze, velocità base
+      {q:"Una grandezza vettoriale ha…", opts:["modulo, direzione e verso","solo un numero","solo la direzione"], correct:0},
+      {q:"La velocità si misura in…", opts:["m/s","kg","m"], correct:0},
+      {q:"La formula per la velocità media è…", opts:["v = s / t","v = s × t","v = t / s"], correct:0},
+      {q:"Se percorro 80 m in 20 s, la mia velocità è…", opts:["4 m/s","1600 m/s","0,25 m/s"], correct:0},
+      {q:"Lo spostamento è…", opts:["la distanza in linea retta tra partenza e arrivo","tutta la strada percorsa","la velocità × il tempo"], correct:0},
+    ],
+    [ // L2 — MRU
+      {q:"Nel moto rettilineo uniforme (MRU) la velocità è…", opts:["costante","crescente","sempre zero"], correct:0},
+      {q:"Nel MRU l'accelerazione vale…", opts:["zero","10 m/s²","dipende dalla velocità"], correct:0},
+      {q:"Nel grafico spazio–tempo del MRU la curva è…", opts:["una retta inclinata","una parabola","una retta orizzontale"], correct:0},
+      {q:"Nel grafico velocità–tempo del MRU la curva è…", opts:["una retta orizzontale","una retta inclinata","una parabola"], correct:0},
+      {q:"In MRU con v = 10 m/s e t = 5 s, lo spazio è…", opts:["50 m","2 m","15 m"], correct:0},
+    ],
+    [ // L3 — accelerazione
+      {q:"L'accelerazione si misura in…", opts:["m/s²","m/s","kg"], correct:0},
+      {q:"Un oggetto accelera se la sua velocità…", opts:["cambia nel tempo","è costante","è molto grande"], correct:0},
+      {q:"Nel moto uniformemente accelerato (MUA) l'accelerazione è…", opts:["costante","variabile","nulla"], correct:0},
+      {q:"Se v₀ = 0 e a = 4 m/s², dopo 3 s la velocità è…", opts:["12 m/s","7 m/s","43 m/s"], correct:0},
+      {q:"Nel MUA il grafico spazio–tempo è…", opts:["una parabola","una retta","un cerchio"], correct:0},
+    ],
+    [ // L4 — MUA avanzato
+      {q:"La formula v = v₀ + at si usa nel…", opts:["MUA","MRU","moto circolare"], correct:0},
+      {q:"Un'auto frena: la sua accelerazione è…", opts:["negativa (decelerazione)","positiva","nulla"], correct:0},
+      {q:"Se v₀ = 0, a = 5 m/s², t = 4 s: lo spazio percorso è…", opts:["40 m","20 m","10 m"], correct:0},
+      {q:"Nel grafico v–t del MUA la curva è…", opts:["una retta inclinata","una parabola","una retta orizzontale"], correct:0},
+      {q:"Per convertire 54 km/h in m/s si…", opts:["divide per 3,6","moltiplica per 3,6","divide per 60"], correct:0},
+    ],
+  ];
+  let qLevel=0, qc=0, qs=0, qCorrect=0;
+  function setQuizLevel(lvl){ qLevel=lvl; qc=0; qs=0; document.getElementById("quiz-level").innerHTML=levelBar(lvl); showQuiz(); }
+  function showQuiz(){
+    const data=quizLevels[qLevel];
+    const box=document.getElementById("quiz-box");
+    const pr=document.getElementById("quiz-prog");
+    if(qc>=data.length){ box.innerHTML=""; levelResult(pr, qs, data.length, qLevel, Math.max(data.length-1,1), "setQuizLevel"); return; }
+    const it=data[qc];
+    const order=shuffle(it.opts.map((_,i)=>i));
+    const shown=order.map(k=>it.opts[k]);
+    qCorrect=order.indexOf(it.correct);
+    pr.textContent=`Domanda ${qc+1} di ${data.length}`;
+    box.innerHTML=`
+      <div class="ex">
+        <div class="qnum">Domanda ${qc+1}</div>
+        <div class="qtext">${it.q}</div>
+        <div class="options">
+          ${shown.map((o,i)=>`<button class="opt" onclick="quizAns(${i})">${o}</button>`).join("")}
+        </div>
+        <div class="feedback" id="qfb"></div>
+      </div>`;
+  }
+  function quizAns(i){
+    const opts=document.querySelectorAll("#quiz-box .opt");
+    const fb=document.getElementById("qfb");
+    if(i===qCorrect){
+      opts[i].classList.add("correct");
+      fb.textContent="✅ Giusto!"; fb.className="feedback ok";
+      qs++; opts.forEach(o=>o.disabled=true);
+      setTimeout(()=>{ qc++; showQuiz(); },1100);
+    } else {
+      opts[i].classList.add("wrong");
+      fb.textContent="Riprova 🙂"; fb.className="feedback no";
+    }
+  }
+
+  /* ============ SEZIONE 3 — ABBINA ============ */
+  const matchLevels = [
+    [ // L1 — grandezza ↔ unità di misura
+      {l:"Spazio (s)", r:"metro (m) 📏"},
+      {l:"Tempo (t)", r:"secondo (s) ⏱️"},
+      {l:"Velocità (v)", r:"m/s 🏃"},
+      {l:"Accelerazione (a)", r:"m/s² 🚀"},
+      {l:"Spostamento", r:"grandezza vettoriale 📐"},
+    ],
+    [ // L2 — formula ↔ significato
+      {l:"v = s / t", r:"velocità = spazio ÷ tempo"},
+      {l:"s = v × t", r:"spazio = velocità × tempo"},
+      {l:"t = s / v", r:"tempo = spazio ÷ velocità"},
+      {l:"a = Δv / Δt", r:"accelerazione = Δvelocità ÷ tempo"},
+      {l:"v = v₀ + at", r:"velocità finale nel MUA"},
+    ],
+    [ // L3 — tipo di moto ↔ caratteristica
+      {l:"MRU", r:"velocità costante, a = 0"},
+      {l:"MUA", r:"accelerazione costante ≠ 0 🔺"},
+      {l:"Moto a riposo", r:"velocità = 0 🧱"},
+      {l:"Decelerazione", r:"accelerazione negativa ← frenata"},
+      {l:"Caduta libera", r:"a = g ≈ 10 m/s² 🍎"},
+    ],
+    [ // L4 — dato ↔ risultato
+      {l:"v=5m/s, t=10s → s=?", r:"50 m"},
+      {l:"s=90m, v=9m/s → t=?", r:"10 s"},
+      {l:"v₀=0, a=2m/s², t=5s → v=?", r:"10 m/s"},
+      {l:"v₀=0, a=2m/s², t=5s → s=?", r:"25 m"},
+      {l:"v₀=0, vf=20m/s, t=4s → a=?", r:"5 m/s²"},
+    ],
+  ];
+  let mLevel=0, selL=null, matched=0, firstTry=0, spoiled;
+  function setMatchLevel(lvl){
+    mLevel=lvl; selL=null; matched=0; firstTry=0; spoiled=new Set();
+    const pairs=matchLevels[lvl];
+    document.getElementById("match-level").innerHTML=levelBar(lvl);
+    const grid=document.getElementById("match-grid");
+    const left=pairs.map((p,i)=>`<button class="match-btn" id="ml${i}" onclick="pickL(${i})">${p.l}</button>`).join("");
+    const order=shuffle(pairs.map((_,i)=>i));
+    const right=order.map(i=>`<button class="match-btn" id="mr${i}" onclick="pickR(${i})">${pairs[i].r}</button>`).join("");
+    grid.innerHTML=`<div class="match-col">${left}</div><div class="match-col">${right}</div>`;
+    document.getElementById("match-prog").textContent=`Coppie collegate: 0 di ${pairs.length}`;
+  }
+  function pickL(i){
+    const btn=document.getElementById("ml"+i);
+    if(btn.classList.contains("done")) return;
+    document.querySelectorAll(".match-btn.sel").forEach(b=>b.classList.remove("sel"));
+    selL=i; btn.classList.add("sel");
+  }
+  function pickR(i){
+    if(selL===null) return;
+    const rBtn=document.getElementById("mr"+i);
+    if(rBtn.classList.contains("done")) return;
+    const lBtn=document.getElementById("ml"+selL);
+    const pairs=matchLevels[mLevel];
+    if(selL===i){
+      lBtn.classList.remove("sel"); lBtn.classList.add("done"); rBtn.classList.add("done");
+      if(!spoiled.has(selL)) firstTry++;
+      selL=null; matched++;
+      const pr=document.getElementById("match-prog");
+      if(matched>=pairs.length){
+        levelResult(pr, firstTry, pairs.length, mLevel, Math.max(pairs.length-1,1), "setMatchLevel");
+      } else {
+        pr.textContent=`Coppie collegate: ${matched} di ${pairs.length}`;
+      }
+    } else {
+      spoiled.add(selL);
+      rBtn.classList.add("flash");
+      setTimeout(()=>rBtn.classList.remove("flash"),500);
+      lBtn.classList.remove("sel"); selL=null;
+    }
+  }
+
+  setCalcLevel(0);
+  setQuizLevel(0);
+  setMatchLevel(0);
+</script>
+<script>
+  if ('serviceWorker' in navigator) { navigator.serviceWorker.register('./service-worker.js'); }
+</script>
+</body>
+</html>

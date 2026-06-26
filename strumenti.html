@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fisica - Gli strumenti della fisica</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FAF6EE">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Fisica di Irene">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+  <a class="backbtn" href="index.html">← Indice</a>
+  <h1>🛠️ Gli strumenti della fisica</h1>
+  <p class="sub">Strumenti, errori di misura e notazione scientifica</p>
+
+  <div class="allena">
+    🏋️ <b>Vuoi allenarti?</b><br>
+    <a href="strumenti-allenamento.html">▶ Apri l'allenamento</a>
+  </div>
+
+  <div class="card">
+    <p>📌 <b>A cosa serve:</b> ogni volta che misuri, usi uno <b>strumento</b> e fai sempre un piccolo <b>errore</b>. Questo mattoncino ti insegna a descrivere gli strumenti, a calcolare gli <b>errori di misura</b> e a scrivere i numeri in <b>notazione scientifica</b>.</p>
+  </div>
+
+  <div class="card">
+    <h2>🛠️ 1. Gli strumenti e le loro caratteristiche</h2>
+    <p>Uno <b>strumento di misura</b> serve a misurare una grandezza (il righello misura lunghezze, la bilancia la massa…). Ogni strumento ha <b>due caratteristiche</b> importanti:</p>
+    <table>
+      <tr><th>Caratteristica</th><th>Che cos'è</th><th>Esempio</th></tr>
+      <tr><td><b>Portata</b></td><td>il valore <b>massimo</b> che lo strumento può misurare</td><td>un righello da 30 cm ha portata 30 cm</td></tr>
+      <tr><td><b>Sensibilità</b></td><td>la <b>più piccola</b> misura che riesce a leggere</td><td>un righello coi millimetri ha sensibilità 1 mm</td></tr>
+    </table>
+    <div class="tip">🎨 <b>Trucco:</b> <i>Portata = il PIÙ GRANDE che misura · Sensibilità = il PIÙ PICCOLO che distingue.</i></div>
+    <table>
+      <tr><th>Strumento</th><th>Misura</th></tr>
+      <tr><td>Righello / metro</td><td>lunghezza</td></tr>
+      <tr><td>Bilancia</td><td>massa</td></tr>
+      <tr><td>Cronometro</td><td>tempo</td></tr>
+      <tr><td>Termometro</td><td>temperatura</td></tr>
+      <tr><td>Cilindro graduato</td><td>volume dei liquidi</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>🎯 2. Gli errori sulle misure</h2>
+    <div class="warn">⚠️ <b>Verità importante:</b> nessuna misura è perfetta! C'è <b>sempre</b> un piccolo errore (si chiama anche <i>incertezza</i>).</div>
+    <p>Esistono <b>due tipi</b> di errore:</p>
+    <ul>
+      <li><b>Errore casuale</b> 🎲 → cambia ogni volta in modo imprevedibile (la mano trema, leggi un po' diverso…). <b>Si riduce ripetendo</b> la misura tante volte.</li>
+      <li><b>Errore sistematico</b> 📐 → è sempre nello <b>stesso modo</b> (un righello che parte male, una bilancia tarata male). Ripetere <b>non</b> lo elimina.</li>
+    </ul>
+    <h3>Quando ripeti la misura più volte</h3>
+    <table>
+      <tr><th>Cosa</th><th>Formula</th><th>In parole</th></tr>
+      <tr><td><b>Valore medio</b> (x̄)</td><td class="hl">somma ÷ n. misure</td><td>la "media" delle misure</td></tr>
+      <tr><td><b>Errore assoluto</b> (Eₐ)</td><td class="hl">(max − min) ÷ 2</td><td>metà della differenza tra la più grande e la più piccola</td></tr>
+      <tr><td><b>Errore relativo</b> (Eᵣ)</td><td class="hl">Eₐ ÷ x̄</td><td>quanto pesa l'errore rispetto alla misura</td></tr>
+      <tr><td><b>Errore percentuale</b></td><td class="hl">Eᵣ × 100</td><td>l'errore relativo in percentuale (%)</td></tr>
+    </table>
+    <div class="tip">📝 Il risultato si scrive così: <b>valore medio ± errore assoluto</b> (con l'unità). Esempio: <b>(4,54 ± 0,02) mm</b></div>
+    <div class="tip">🎨 <b>Trucco:</b> più l'<b>errore relativo</b> (o percentuale) è <b>piccolo</b>, più la misura è <b>precisa</b>.</div>
+    <h3>✏️ Esempio svolto 1 — misure ripetute</h3>
+    <div class="example">Misuro una lunghezza 3 volte: <b>10,2 · 10,4 · 10,3 cm</b>.<br>
+      <b>1) Valore medio:</b> (10,2 + 10,4 + 10,3) ÷ 3 = <b>10,3 cm</b><br>
+      <b>2) Errore assoluto:</b> (10,4 − 10,2) ÷ 2 = <b>0,1 cm</b><br>
+      <b>3) Forma corretta:</b> <b>(10,3 ± 0,1) cm</b> ✅</div>
+    <h3>✏️ Esempio svolto 2 — anche relativo e percentuale</h3>
+    <div class="example">Diametro di una pallina: <b>4,52 · 4,54 · 4,56 · 4,52 · 4,53 · 4,54 mm</b>.<br>
+      <b>1) Valore medio:</b> 27,21 ÷ 6 ≈ <b>4,54 mm</b><br>
+      <b>2) Errore assoluto:</b> (4,56 − 4,52) ÷ 2 = <b>0,02 mm</b><br>
+      <b>3) Errore relativo:</b> 0,02 ÷ 4,54 ≈ <b>0,0044</b><br>
+      <b>4) Errore percentuale:</b> 0,0044 × 100 ≈ <b>0,44 %</b><br>
+      <b>5) Forma corretta:</b> <b>(4,54 ± 0,02) mm</b> ✅</div>
+  </div>
+
+  <div class="card videobox">
+    <h2>🎬 Video — Misure ed errori</h2>
+    <div class="video" data-id="rSa8o0zkdWo" role="button" tabindex="0" aria-label="Riproduci il video su misure ed errori" onclick="playVideo(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();playVideo(this);}">
+      <img src="https://i.ytimg.com/vi/rSa8o0zkdWo/hqdefault.jpg" alt="Anteprima: misure ed errori" loading="lazy">
+      <span class="video-play"></span>
+    </div>
+    <p class="video-meta">📺 La Fisica Che Ci Piace · <a href="https://www.youtube.com/watch?v=rSa8o0zkdWo" target="_blank" rel="noopener">Apri su YouTube ↗</a></p>
+  </div>
+
+  <div class="card">
+    <h2>🔬 3. La notazione scientifica</h2>
+    <p>Serve a scrivere in modo comodo i numeri <b>molto grandi</b> o <b>molto piccoli</b>. Si scrive sempre come:</p>
+    <div class="formula">a × 10ⁿ &nbsp;(con 1 ≤ a &lt; 10)</div>
+    <ul>
+      <li>Numero <b>GRANDE</b> → sposti la virgola a <b>sinistra</b>, l'esponente è <b>positivo</b>.</li>
+      <li>Numero <b>PICCOLO</b> (con lo zero virgola) → sposti la virgola a <b>destra</b>, l'esponente è <b>negativo</b>.</li>
+    </ul>
+    <h3>✏️ Esempi svolti</h3>
+    <div class="example"><b>25 000</b> → sposto a sinistra di 4 posti → <b>2,5 × 10⁴</b></div>
+    <div class="example"><b>300 000</b> → sposto a sinistra di 5 posti → <b>3 × 10⁵</b></div>
+    <div class="example"><b>0,0036</b> → sposto a destra di 3 posti → <b>3,6 × 10⁻³</b></div>
+    <div class="example"><b>0,00012</b> → sposto a destra di 4 posti → <b>1,2 × 10⁻⁴</b></div>
+    <h3>Arrotondare i numeri</h3>
+    <ul>
+      <li>se la cifra dopo è <b>0,1,2,3,4</b> → si lascia uguale (per difetto)</li>
+      <li>se la cifra dopo è <b>5,6,7,8,9</b> → si aumenta di 1 (per eccesso)</li>
+    </ul>
+    <div class="example"><b>4,537</b> a 2 cifre decimali → guardo la 3ª cifra (7 → eccesso) → <b>4,54</b></div>
+  </div>
+
+  <div class="card videobox">
+    <h2>🎬 Video — La notazione scientifica</h2>
+    <div class="video" data-id="GAPLYetr6yE" role="button" tabindex="0" aria-label="Riproduci il video sulla notazione scientifica" onclick="playVideo(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();playVideo(this);}">
+      <img src="https://i.ytimg.com/vi/GAPLYetr6yE/hqdefault.jpg" alt="Anteprima: la notazione scientifica" loading="lazy">
+      <span class="video-play"></span>
+    </div>
+    <p class="video-meta">📺 Zanichelli editore · <a href="https://www.youtube.com/watch?v=GAPLYetr6yE" target="_blank" rel="noopener">Apri su YouTube ↗</a></p>
+  </div>
+
+  <div class="card">
+    <h2>🗺️ Mappa da tenere in mente</h2>
+    <pre class="ascii">            LA MISURA
+                |
+      __________|__________
+     |                     |
+  STRUMENTO             ERRORE (c'è sempre!)
+  portata               casuale 🎲 / sistematico 📐
+  sensibilità                  |
+                    media · E.assoluto · E.relativo · E.%
+                    risultato = media ± E.assoluto</pre>
+  </div>
+
+  <div class="card">
+    <h2>✅ Esercizi (prova tu!)</h2>
+    <h3>Esercizio 1 — Vero o Falso</h3>
+    <ol>
+      <li>La portata è la misura più piccola che lo strumento legge. → V / F</li>
+      <li>Ogni misura ha sempre un errore. → V / F</li>
+      <li>L'errore casuale si riduce ripetendo le misure. → V / F</li>
+      <li>Più l'errore percentuale è piccolo, più la misura è precisa. → V / F</li>
+    </ol>
+    <h3>Esercizio 2 — Valore medio ed errore assoluto</h3>
+    <p>Misure: <b>20,1 · 20,5 · 20,3 cm</b> → trova valore medio, errore assoluto e forma corretta.</p>
+    <h3>Esercizio 3 — Errore relativo e percentuale</h3>
+    <p>Valore medio <b>50 cm</b>, errore assoluto <b>2 cm</b> → errore relativo e percentuale?</p>
+    <h3>Esercizio 4 — Notazione scientifica</h3>
+    <ol>
+      <li>4500 = ______</li>
+      <li>60 000 = ______</li>
+      <li>0,007 = ______</li>
+      <li>0,00025 = ______</li>
+    </ol>
+    <button class="solbtn" onclick="toggleSol('sol1', this)">🔑 Mostra soluzioni</button>
+    <div class="sol" id="sol1">
+      <div class="tip-green">
+        <b>Es. 1:</b> 1. F (è la sensibilità) · 2. V · 3. V · 4. V<br>
+        <b>Es. 2:</b> media = 60,9 ÷ 3 = <b>20,3 cm</b> · Eₐ = (20,5 − 20,1) ÷ 2 = <b>0,2 cm</b> · <b>(20,3 ± 0,2) cm</b><br>
+        <b>Es. 3:</b> Eᵣ = 2 ÷ 50 = <b>0,04</b> · percentuale = <b>4 %</b><br>
+        <b>Es. 4:</b> 1. 4,5 × 10³ · 2. 6 × 10⁴ · 3. 7 × 10⁻³ · 4. 2,5 × 10⁻⁴
+      </div>
+    </div>
+  </div>
+
+  <div class="allena">
+    🏆 Quando sai trovare media, errore assoluto e percentuale da sola, sei pronta!<br>
+    <a href="strumenti-allenamento.html">🏋️ Allenati con l'app</a>
+  </div>
+
+  <footer>🔗 <a href="index.html">Indice</a> · ← <a href="grandezze.html">Le grandezze fisiche</a> · <a href="movimenti.html">Descrivere i movimenti →</a></footer>
+</div>
+<script src="app.js"></script>
+<script>
+  if ('serviceWorker' in navigator) { navigator.serviceWorker.register('./service-worker.js'); }
+</script>
+</body>
+</html>

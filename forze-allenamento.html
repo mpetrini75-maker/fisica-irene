@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FAF6EE">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Fisica di Irene">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<title>Le forze — Allenamento</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAF6EE; --card:#FFFFFF; --ink:#2F2A24;
+    --accent:#2E6B8F; --accent-soft:#DCEAF2;
+    --green:#3E8E5A; --green-soft:#E2F0E6;
+    --red:#C2492F; --red-soft:#F6E1DB;
+    --blue:#3B6EA5; --blue-soft:#E2ECF5;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; font-family:"Lexend","Trebuchet MS",Verdana,sans-serif;
+    background:var(--bg); color:var(--ink); line-height:1.7; letter-spacing:0.3px; padding:24px 14px 60px;}
+  .wrap{max-width:620px;margin:0 auto;}
+  h1{color:var(--accent);font-size:1.6rem;text-align:center;margin:0 0 6px;}
+  .sub{text-align:center;color:#8a7f70;margin:0 0 26px;font-size:1rem;}
+  .card{background:var(--card);border-radius:18px;padding:22px 20px;margin-bottom:22px;
+    box-shadow:0 4px 14px rgba(0,0,0,0.06);border:1px solid #efe7da;}
+  .card h2{margin:0 0 10px;font-size:1.25rem;color:var(--accent);display:flex;align-items:center;gap:8px;}
+  .card .lead{color:#8a7f70;margin:0 0 12px;font-size:0.97rem;}
+  .levelbar{margin:0 0 12px;}
+  .lvrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:0.98rem;color:var(--accent);}
+  .lvdots{display:inline-flex;gap:6px;}
+  .lvdot{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    background:var(--bg);border:2px solid var(--accent-soft);color:#b9ad9c;font-size:0.85rem;font-weight:bold;}
+  .lvdot.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);}
+  .ex{margin:14px 0;}
+  .qnum{font-weight:bold;color:var(--accent);}
+  .qtext{font-size:1.1rem;margin:6px 0 8px;}
+  .options{display:flex;flex-direction:column;gap:10px;}
+  .opt{background:var(--bg);border:2px solid var(--accent-soft);
+    border-radius:12px;padding:13px 14px;font-size:1.05rem;cursor:pointer;
+    text-align:left;font-family:inherit;color:var(--ink);transition:all .15s;}
+  .opt:hover{border-color:var(--accent);}
+  .opt.correct{background:var(--green-soft);border-color:var(--green);color:var(--green);font-weight:bold;}
+  .opt.wrong{background:var(--red-soft);border-color:var(--red);color:var(--red);}
+  .feedback{margin-top:10px;font-size:1.02rem;font-weight:bold;min-height:24px;}
+  .feedback.ok{color:var(--green);}
+  .feedback.no{color:var(--red);}
+  .progress{text-align:center;font-size:1.05rem;margin:12px 0 0;color:#8a7f70;}
+  .star{font-size:1.4rem;}
+  .calc-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px;}
+  .write-input{flex:1;min-width:120px;font-family:"Lexend",sans-serif;font-size:1.2rem;
+    padding:12px 14px;border:2px solid var(--accent-soft);border-radius:12px;
+    background:var(--bg);color:var(--ink);}
+  .write-input:focus{outline:none;border-color:var(--accent);}
+  .unit{font-size:1.1rem;color:#8a7f70;font-weight:bold;}
+  .checkbtn{margin-top:10px;background:var(--accent);color:#fff;border:none;
+    border-radius:12px;padding:10px 20px;font-size:1rem;cursor:pointer;font-family:inherit;}
+  .write-input.okbox{border-color:var(--green);background:var(--green-soft);}
+  .write-input.nobox{border-color:var(--red);}
+  .match-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px;}
+  .match-col{display:flex;flex-direction:column;gap:10px;}
+  .match-btn{background:var(--bg);border:2px solid var(--accent-soft);border-radius:12px;
+    padding:12px;font-size:0.98rem;cursor:pointer;font-family:inherit;color:var(--ink);
+    display:flex;align-items:center;justify-content:center;text-align:center;gap:6px;transition:all .15s;}
+  .match-btn:hover{border-color:var(--accent);}
+  .match-btn.sel{border-color:var(--blue);background:var(--blue-soft);color:var(--blue);font-weight:bold;}
+  .match-btn.done{background:var(--green-soft);border-color:var(--green);color:var(--green);
+    font-weight:bold;cursor:default;opacity:0.85;}
+  .match-btn.flash{border-color:var(--red);background:var(--red-soft);}
+  .restart{display:inline-block;margin:12px auto 0;background:var(--accent);color:#fff;border:none;
+    border-radius:12px;padding:11px 22px;font-size:1rem;cursor:pointer;font-family:inherit;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a href="index.html" style="display:inline-block;background:#DCEAF2;color:#2E6B8F;text-decoration:none;border-radius:12px;padding:8px 16px;font-size:0.98rem;font-weight:bold;margin-bottom:14px;">&larr; Indice</a>
+  <h1>🏋️ Le forze — Allenamento</h1>
+  <p class="sub">Mattoncino 4 · 3 sezioni · 4 livelli ciascuna 💪</p>
+
+  <div class="card">
+    <h2>🧮 1. Calcoli</h2>
+    <p class="lead">Scrivi solo il numero (usa la virgola se serve, es. 0,2). Poi tocca "Controlla". Se sbagli ti spiego come si fa!</p>
+    <div class="levelbar" id="calc-level"></div>
+    <div id="calc-list"></div>
+    <div class="progress" id="calc-prog"></div>
+  </div>
+
+  <div class="card">
+    <h2>🧠 2. Concetti</h2>
+    <p class="lead">Scegli la risposta giusta. Puoi riprovare finché non la trovi!</p>
+    <div class="levelbar" id="quiz-level"></div>
+    <div id="quiz-box"></div>
+    <div class="progress" id="quiz-prog"></div>
+  </div>
+
+  <div class="card">
+    <h2>🔗 3. Abbina</h2>
+    <p class="lead">Tocca una casella a sinistra, poi la sua coppia a destra. Collega tutte le coppie!</p>
+    <div class="levelbar" id="match-level"></div>
+    <div class="match-grid" id="match-grid"></div>
+    <div class="progress" id="match-prog"></div>
+  </div>
+</div>
+
+<script>
+  function stars(correct,total){
+    const pct=correct/total;
+    const n=pct===1?5:pct>=0.75?4:pct>=0.5?3:pct>=0.25?2:1;
+    return "⭐".repeat(n);
+  }
+  const LV=["Base","Intermedio","Avanzato","Sfida"];
+  function levelBar(level){
+    let dots="";
+    for(let i=0;i<4;i++) dots+=`<span class="lvdot ${i<=level?'on':''}">${i+1}</span>`;
+    return `<div class="lvrow"><b>Livello ${level+1} di 4 · ${LV[level]} 🔓</b><span class="lvdots">${dots}</span></div>`;
+  }
+  function levelResult(progEl, score, total, level, threshold, setFnName){
+    const passed = score>=threshold;
+    let html=`<div class="star">${stars(score,total)}</div>${score}/${total} giuste<br>`;
+    if(passed && level<3){
+      html+=`<b>Bravissima! Livello ${level+2} sbloccato 🔓</b><br>`;
+      html+=`<button class="restart" onclick="${setFnName}(${level+1})">➡️ Vai al Livello ${level+2}</button>`;
+    } else if(passed && level===3){
+      html+=`<b>🏆 Hai completato tutti i livelli!</b><br>`;
+      html+=`<button class="restart" onclick="${setFnName}(0)">🔄 Rigioca dal Livello 1</button>`;
+    } else {
+      html+=`<b>Ci sei quasi! Riprova questo livello, ce la fai 🌱</b><br>`;
+      html+=`<button class="restart" onclick="${setFnName}(${level})">🔄 Rifai il Livello ${level+1}</button>`;
+    }
+    progEl.innerHTML=html;
+  }
+  function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+  /* ============ SEZIONE 1 — CALCOLI ============ */
+  const calcLevels = [
+    [ // L1 — peso P = m × g (g = 10)
+      {q:"Massa <b>m = 2 kg</b>, g = 10 m/s². Peso P = ____", a:20, unit:"N", sol:"P = m × g = 2 × 10 = 20 N."},
+      {q:"Massa <b>m = 5 kg</b>, g = 10 m/s². Peso P = ____", a:50, unit:"N", sol:"P = 5 × 10 = 50 N."},
+      {q:"Massa <b>m = 10 kg</b>, g = 10 m/s². Peso P = ____", a:100, unit:"N", sol:"P = 10 × 10 = 100 N."},
+      {q:"Massa <b>m = 0,5 kg</b>, g = 10 m/s². Peso P = ____", a:5, unit:"N", sol:"P = 0,5 × 10 = 5 N."},
+      {q:"Massa <b>m = 8 kg</b>, g = 10 m/s². Peso P = ____", a:80, unit:"N", sol:"P = 8 × 10 = 80 N."},
+      {q:"Massa <b>m = 25 kg</b>, g = 10 m/s². Peso P = ____", a:250, unit:"N", sol:"P = 25 × 10 = 250 N."},
+    ],
+    [ // L2 — massa dal peso m = P / g (g = 10)
+      {q:"Peso <b>P = 30 N</b>, g = 10 m/s². Massa m = ____", a:3, unit:"kg", sol:"m = P ÷ g = 30 ÷ 10 = 3 kg."},
+      {q:"Peso <b>P = 100 N</b>, g = 10 m/s². Massa m = ____", a:10, unit:"kg", sol:"m = 100 ÷ 10 = 10 kg."},
+      {q:"Peso <b>P = 5 N</b>, g = 10 m/s². Massa m = ____", a:0.5, unit:"kg", sol:"m = 5 ÷ 10 = 0,5 kg."},
+      {q:"Peso <b>P = 70 N</b>, g = 10 m/s². Massa m = ____", a:7, unit:"kg", sol:"m = 70 ÷ 10 = 7 kg."},
+      {q:"Peso <b>P = 200 N</b>, g = 10 m/s². Massa m = ____", a:20, unit:"kg", sol:"m = 200 ÷ 10 = 20 kg."},
+      {q:"Peso <b>P = 12 N</b>, g = 10 m/s². Massa m = ____", a:1.2, unit:"kg", sol:"m = 12 ÷ 10 = 1,2 kg."},
+    ],
+    [ // L3 — legge di Hooke F = k × ΔL
+      {q:"Molla: <b>k = 50 N/m</b>, <b>ΔL = 0,2 m</b>. Forza F = ____", a:10, unit:"N", sol:"F = k × ΔL = 50 × 0,2 = 10 N."},
+      {q:"Molla: <b>k = 100 N/m</b>, <b>ΔL = 0,3 m</b>. F = ____", a:30, unit:"N", sol:"F = 100 × 0,3 = 30 N."},
+      {q:"Molla: <b>F = 20 N</b>, <b>k = 100 N/m</b>. Allungamento ΔL = ____", a:0.2, unit:"m", sol:"ΔL = F ÷ k = 20 ÷ 100 = 0,2 m."},
+      {q:"Molla: <b>F = 15 N</b>, <b>ΔL = 0,3 m</b>. Costante k = ____", a:50, unit:"N/m", sol:"k = F ÷ ΔL = 15 ÷ 0,3 = 50 N/m."},
+      {q:"Molla: <b>k = 40 N/m</b>, <b>ΔL = 0,5 m</b>. F = ____", a:20, unit:"N", sol:"F = 40 × 0,5 = 20 N."},
+      {q:"Molla: <b>F = 8 N</b>, <b>k = 40 N/m</b>. ΔL = ____", a:0.2, unit:"m", sol:"ΔL = 8 ÷ 40 = 0,2 m."},
+    ],
+    [ // L4 — misto (peso con g=9,8, Hooke, massa)
+      {q:"Massa <b>m = 3 kg</b>, g = 9,8 m/s². Peso P = ____", a:29.4, unit:"N", sol:"P = 3 × 9,8 = 29,4 N."},
+      {q:"Massa <b>m = 10 kg</b>, g = 9,8 m/s². Peso P = ____", a:98, unit:"N", sol:"P = 10 × 9,8 = 98 N."},
+      {q:"Molla: <b>F = 25 N</b>, <b>k = 50 N/m</b>. ΔL = ____", a:0.5, unit:"m", sol:"ΔL = 25 ÷ 50 = 0,5 m."},
+      {q:"Peso <b>P = 150 N</b>, g = 10 m/s². Massa m = ____", a:15, unit:"kg", sol:"m = 150 ÷ 10 = 15 kg."},
+      {q:"Molla: <b>k = 200 N/m</b>, <b>ΔL = 0,1 m</b>. F = ____", a:20, unit:"N", sol:"F = 200 × 0,1 = 20 N."},
+      {q:"Molla: <b>F = 60 N</b>, <b>ΔL = 0,2 m</b>. k = ____", a:300, unit:"N/m", sol:"k = 60 ÷ 0,2 = 300 N/m."},
+    ],
+  ];
+  let cLevel=0, calcDone=[];
+  function parseNum(s){ return parseFloat(String(s).trim().replace(",",".").replace(/\s+/g,"")); }
+  function setCalcLevel(lvl){
+    cLevel=lvl;
+    const data=calcLevels[lvl];
+    calcDone=new Array(data.length).fill(false);
+    document.getElementById("calc-level").innerHTML=levelBar(lvl);
+    document.getElementById("calc-prog").textContent=`Completati 0 di ${data.length}`;
+    const list=document.getElementById("calc-list");
+    list.innerHTML=data.map((it,i)=>`
+      <div class="ex">
+        <div class="qnum">Calcolo ${i+1}</div>
+        <div class="qtext">${it.q}</div>
+        <div class="calc-row">
+          <input class="write-input" id="ci${i}" type="text" inputmode="decimal" autocomplete="off" placeholder="numero…">
+          <span class="unit">${it.unit}</span>
+        </div>
+        <button class="checkbtn" onclick="checkCalc(${i})">Controlla</button>
+        <div class="feedback" id="cfb${i}"></div>
+      </div>`).join("");
+  }
+  function checkCalc(i){
+    const it=calcLevels[cLevel][i];
+    const inp=document.getElementById("ci"+i);
+    const fb=document.getElementById("cfb"+i);
+    const val=parseNum(inp.value);
+    const ok = !isNaN(val) && Math.abs(val - it.a) < 0.05;
+    if(ok){
+      inp.classList.add("okbox"); inp.classList.remove("nobox");
+      fb.innerHTML="✅ Perfetto! "+it.sol; fb.className="feedback ok";
+    } else {
+      inp.classList.add("nobox");
+      fb.innerHTML=`💛 Quasi! ${it.sol}<br>La risposta è: <b>${String(it.a).replace(".",",")} ${it.unit}</b>`;
+      fb.className="feedback no";
+    }
+    if(!calcDone[i]){ calcDone[i]=true; updateCalc(); }
+  }
+  function updateCalc(){
+    const data=calcLevels[cLevel];
+    const pr=document.getElementById("calc-prog");
+    const done=calcDone.filter(Boolean).length;
+    if(done<data.length){ pr.textContent=`Completati ${done} di ${data.length}`; return; }
+    let correct=0;
+    data.forEach((_,i)=>{ if(document.getElementById("ci"+i).classList.contains("okbox")) correct++; });
+    levelResult(pr, correct, data.length, cLevel, 4, "setCalcLevel");
+  }
+
+  /* ============ SEZIONE 2 — CONCETTI ============ */
+  const quizLevels = [
+    [ // L1 — che cos'è una forza
+      {q:"La forza si misura in…", opts:["newton (N)","chilogrammi (kg)","metri (m)"], correct:0},
+      {q:"La forza è una grandezza…", opts:["vettoriale (modulo, direzione, verso)","scalare (solo un numero)","senza unità"], correct:0},
+      {q:"Lo strumento che misura le forze è il…", opts:["dinamometro","termometro","cronometro"], correct:0},
+      {q:"Una forza può…", opts:["mettere in moto o deformare un oggetto","cambiare il colore","far sparire un oggetto"], correct:0},
+      {q:"Il dinamometro funziona grazie a una…", opts:["molla","batteria","lente"], correct:0},
+    ],
+    [ // L2 — legge di Hooke
+      {q:"La legge di Hooke è…", opts:["F = k × ΔL","F = m × a","P = m × g"], correct:0},
+      {q:"In F = k × ΔL, ΔL è…", opts:["l'allungamento della molla","la massa","il tempo"], correct:0},
+      {q:"Una molla dura (k grande) con la stessa forza si allunga…", opts:["poco","tanto","per niente"], correct:0},
+      {q:"La costante elastica k si misura in…", opts:["N/m","kg","m/s"], correct:0},
+      {q:"Più forte tiro una molla, più essa…", opts:["si allunga","si accorcia","resta uguale"], correct:0},
+    ],
+    [ // L3 — massa e peso
+      {q:"La massa si misura in…", opts:["kg","N","m/s²"], correct:0},
+      {q:"Il peso si misura in…", opts:["newton (N)","kg","litri"], correct:0},
+      {q:"La formula del peso è…", opts:["P = m × g","P = m / g","P = m + g"], correct:0},
+      {q:"Andando sulla Luna, la massa…", opts:["resta uguale","diventa zero","raddoppia"], correct:0},
+      {q:"Sulla Terra g vale circa…", opts:["9,8 m/s²","1 m/s²","100 m/s²"], correct:0},
+    ],
+    [ // L4 — attrito + ripasso
+      {q:"L'attrito è una forza che…", opts:["si oppone al movimento","fa accelerare sempre","non esiste"], correct:0},
+      {q:"L'attrito su un oggetto già in moto si chiama…", opts:["dinamico","statico","elastico"], correct:0},
+      {q:"Su una superficie liscia (ghiaccio) l'attrito è…", opts:["piccolo","grandissimo","infinito"], correct:0},
+      {q:"L'attrito è UTILE quando…", opts:["camminiamo o freniamo","consuma gli ingranaggi","scaldiamo l'olio"], correct:0},
+      {q:"Massa e peso sono…", opts:["due cose diverse","la stessa cosa","entrambi in kg"], correct:0},
+    ],
+  ];
+  let qLevel=0, qc=0, qs=0, qCorrect=0;
+  function setQuizLevel(lvl){ qLevel=lvl; qc=0; qs=0; document.getElementById("quiz-level").innerHTML=levelBar(lvl); showQuiz(); }
+  function showQuiz(){
+    const data=quizLevels[qLevel];
+    const box=document.getElementById("quiz-box");
+    const pr=document.getElementById("quiz-prog");
+    if(qc>=data.length){ box.innerHTML=""; levelResult(pr, qs, data.length, qLevel, Math.max(data.length-1,1), "setQuizLevel"); return; }
+    const it=data[qc];
+    const order=shuffle(it.opts.map((_,i)=>i));
+    const shown=order.map(k=>it.opts[k]);
+    qCorrect=order.indexOf(it.correct);
+    pr.textContent=`Domanda ${qc+1} di ${data.length}`;
+    box.innerHTML=`
+      <div class="ex">
+        <div class="qnum">Domanda ${qc+1}</div>
+        <div class="qtext">${it.q}</div>
+        <div class="options">
+          ${shown.map((o,i)=>`<button class="opt" onclick="quizAns(${i})">${o}</button>`).join("")}
+        </div>
+        <div class="feedback" id="qfb"></div>
+      </div>`;
+  }
+  function quizAns(i){
+    const opts=document.querySelectorAll("#quiz-box .opt");
+    const fb=document.getElementById("qfb");
+    if(i===qCorrect){
+      opts[i].classList.add("correct");
+      fb.textContent="✅ Giusto!"; fb.className="feedback ok";
+      qs++; opts.forEach(o=>o.disabled=true);
+      setTimeout(()=>{ qc++; showQuiz(); },1100);
+    } else {
+      opts[i].classList.add("wrong");
+      fb.textContent="Riprova 🙂"; fb.className="feedback no";
+    }
+  }
+
+  /* ============ SEZIONE 3 — ABBINA ============ */
+  const matchLevels = [
+    [ // L1 — grandezza ↔ unità/strumento
+      {l:"Forza (F)", r:"newton (N) 💪"},
+      {l:"Massa (m)", r:"chilogrammo (kg) ⚖️"},
+      {l:"Dinamometro", r:"misura le forze 🔧"},
+      {l:"Bilancia", r:"misura la massa"},
+      {l:"Peso (P)", r:"forza di gravità (N) 🌍"},
+    ],
+    [ // L2 — formula ↔ significato
+      {l:"F = k × ΔL", r:"legge di Hooke (molla)"},
+      {l:"P = m × g", r:"peso = massa × gravità"},
+      {l:"ΔL = F / k", r:"allungamento della molla"},
+      {l:"m = P / g", r:"massa dal peso"},
+      {l:"k = F / ΔL", r:"costante elastica"},
+    ],
+    [ // L3 — concetto ↔ caratteristica
+      {l:"Massa", r:"non cambia mai 🧱"},
+      {l:"Peso", r:"cambia sulla Luna 🌙"},
+      {l:"Attrito statico", r:"oggetto ancora fermo"},
+      {l:"Attrito dinamico", r:"oggetto già in moto"},
+      {l:"Molla dura (k grande)", r:"si allunga poco"},
+    ],
+    [ // L4 — dato ↔ risultato (g = 10)
+      {l:"m=4kg → P=?", r:"40 N"},
+      {l:"P=60N → m=?", r:"6 kg"},
+      {l:"k=100, ΔL=0,3 → F=?", r:"30 N"},
+      {l:"F=20, k=40 → ΔL=?", r:"0,5 m"},
+      {l:"m=0,5kg → P=?", r:"5 N"},
+    ],
+  ];
+  let mLevel=0, selL=null, matched=0, firstTry=0, spoiled;
+  function setMatchLevel(lvl){
+    mLevel=lvl; selL=null; matched=0; firstTry=0; spoiled=new Set();
+    const pairs=matchLevels[lvl];
+    document.getElementById("match-level").innerHTML=levelBar(lvl);
+    const grid=document.getElementById("match-grid");
+    const left=pairs.map((p,i)=>`<button class="match-btn" id="ml${i}" onclick="pickL(${i})">${p.l}</button>`).join("");
+    const order=shuffle(pairs.map((_,i)=>i));
+    const right=order.map(i=>`<button class="match-btn" id="mr${i}" onclick="pickR(${i})">${pairs[i].r}</button>`).join("");
+    grid.innerHTML=`<div class="match-col">${left}</div><div class="match-col">${right}</div>`;
+    document.getElementById("match-prog").textContent=`Coppie collegate: 0 di ${pairs.length}`;
+  }
+  function pickL(i){
+    const btn=document.getElementById("ml"+i);
+    if(btn.classList.contains("done")) return;
+    document.querySelectorAll(".match-btn.sel").forEach(b=>b.classList.remove("sel"));
+    selL=i; btn.classList.add("sel");
+  }
+  function pickR(i){
+    if(selL===null) return;
+    const rBtn=document.getElementById("mr"+i);
+    if(rBtn.classList.contains("done")) return;
+    const lBtn=document.getElementById("ml"+selL);
+    const pairs=matchLevels[mLevel];
+    if(selL===i){
+      lBtn.classList.remove("sel"); lBtn.classList.add("done"); rBtn.classList.add("done");
+      if(!spoiled.has(selL)) firstTry++;
+      selL=null; matched++;
+      const pr=document.getElementById("match-prog");
+      if(matched>=pairs.length){
+        levelResult(pr, firstTry, pairs.length, mLevel, Math.max(pairs.length-1,1), "setMatchLevel");
+      } else {
+        pr.textContent=`Coppie collegate: ${matched} di ${pairs.length}`;
+      }
+    } else {
+      spoiled.add(selL);
+      rBtn.classList.add("flash");
+      setTimeout(()=>rBtn.classList.remove("flash"),500);
+      lBtn.classList.remove("sel"); selL=null;
+    }
+  }
+
+  setCalcLevel(0);
+  setQuizLevel(0);
+  setMatchLevel(0);
+</script>
+<script>
+  if ('serviceWorker' in navigator) { navigator.serviceWorker.register('./service-worker.js'); }
+</script>
+</body>
+</html>

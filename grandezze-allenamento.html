@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FAF6EE">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Fisica di Irene">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<title>Le grandezze fisiche — Allenamento</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAF6EE; --card:#FFFFFF; --ink:#2F2A24;
+    --accent:#2E6B8F; --accent-soft:#DCEAF2;
+    --green:#3E8E5A; --green-soft:#E2F0E6;
+    --red:#C2492F; --red-soft:#F6E1DB;
+    --blue:#3B6EA5; --blue-soft:#E2ECF5;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; font-family:"Lexend","Trebuchet MS",Verdana,sans-serif;
+    background:var(--bg); color:var(--ink); line-height:1.7; letter-spacing:0.3px; padding:24px 14px 60px;}
+  .wrap{max-width:620px;margin:0 auto;}
+  h1{color:var(--accent);font-size:1.6rem;text-align:center;margin:0 0 6px;}
+  .sub{text-align:center;color:#8a7f70;margin:0 0 26px;font-size:1rem;}
+  .card{background:var(--card);border-radius:18px;padding:22px 20px;margin-bottom:22px;
+    box-shadow:0 4px 14px rgba(0,0,0,0.06);border:1px solid #efe7da;}
+  .card h2{margin:0 0 10px;font-size:1.25rem;color:var(--accent);display:flex;align-items:center;gap:8px;}
+  .card .lead{color:#8a7f70;margin:0 0 12px;font-size:0.97rem;}
+  .levelbar{margin:0 0 12px;}
+  .lvrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:0.98rem;color:var(--accent);}
+  .lvdots{display:inline-flex;gap:6px;}
+  .lvdot{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    background:var(--bg);border:2px solid var(--accent-soft);color:#b9ad9c;font-size:0.85rem;font-weight:bold;}
+  .lvdot.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);}
+  .ex{margin:14px 0;}
+  .qnum{font-weight:bold;color:var(--accent);}
+  .qtext{font-size:1.12rem;margin:6px 0 8px;}
+  .options{display:flex;flex-direction:column;gap:10px;}
+  .opt{background:var(--bg);border:2px solid var(--accent-soft);
+    border-radius:12px;padding:13px 14px;font-size:1.08rem;cursor:pointer;
+    text-align:left;font-family:inherit;color:var(--ink);transition:all .15s;}
+  .opt:hover{border-color:var(--accent);}
+  .opt.correct{background:var(--green-soft);border-color:var(--green);color:var(--green);font-weight:bold;}
+  .opt.wrong{background:var(--red-soft);border-color:var(--red);color:var(--red);}
+  .feedback{margin-top:10px;font-size:1.02rem;font-weight:bold;min-height:24px;}
+  .feedback.ok{color:var(--green);}
+  .feedback.no{color:var(--red);}
+  .progress{text-align:center;font-size:1.05rem;margin:12px 0 0;color:#8a7f70;}
+  .star{font-size:1.4rem;}
+  .calc-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px;}
+  .write-input{flex:1;min-width:120px;font-family:"Lexend",sans-serif;font-size:1.2rem;
+    padding:12px 14px;border:2px solid var(--accent-soft);border-radius:12px;
+    background:var(--bg);color:var(--ink);}
+  .write-input:focus{outline:none;border-color:var(--accent);}
+  .unit{font-size:1.1rem;color:#8a7f70;font-weight:bold;}
+  .checkbtn{margin-top:10px;background:var(--accent);color:#fff;border:none;
+    border-radius:12px;padding:10px 20px;font-size:1rem;cursor:pointer;font-family:inherit;}
+  .write-input.okbox{border-color:var(--green);background:var(--green-soft);}
+  .write-input.nobox{border-color:var(--red);}
+  .match-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px;}
+  .match-col{display:flex;flex-direction:column;gap:10px;}
+  .match-btn{background:var(--bg);border:2px solid var(--accent-soft);border-radius:12px;
+    padding:12px;font-size:1.02rem;cursor:pointer;font-family:inherit;color:var(--ink);
+    display:flex;align-items:center;justify-content:center;text-align:center;gap:6px;transition:all .15s;}
+  .match-btn:hover{border-color:var(--accent);}
+  .match-btn.sel{border-color:var(--blue);background:var(--blue-soft);color:var(--blue);font-weight:bold;}
+  .match-btn.done{background:var(--green-soft);border-color:var(--green);color:var(--green);
+    font-weight:bold;cursor:default;opacity:0.85;}
+  .match-btn.flash{border-color:var(--red);background:var(--red-soft);}
+  .restart{display:inline-block;margin:12px auto 0;background:var(--accent);color:#fff;border:none;
+    border-radius:12px;padding:11px 22px;font-size:1rem;cursor:pointer;font-family:inherit;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a href="index.html" style="display:inline-block;background:#DCEAF2;color:#2E6B8F;text-decoration:none;border-radius:12px;padding:8px 16px;font-size:0.98rem;font-weight:bold;margin-bottom:14px;">&larr; Indice</a>
+  <h1>🏋️ Le grandezze fisiche — Allenamento</h1>
+  <p class="sub">Mattoncino 1 · 3 sezioni · 4 livelli ciascuna 🔭</p>
+
+  <!-- SEZIONE 1 — CALCOLI -->
+  <div class="card">
+    <h2>🧮 1. Calcoli</h2>
+    <p class="lead">Scrivi solo il numero (la virgola va bene: es. 2,5). Poi tocca "Controlla". Niente paura: se sbagli ti spiego come si fa!</p>
+    <div class="levelbar" id="calc-level"></div>
+    <div id="calc-list"></div>
+    <div class="progress" id="calc-prog"></div>
+  </div>
+
+  <!-- SEZIONE 2 — CONCETTI -->
+  <div class="card">
+    <h2>🧠 2. Concetti</h2>
+    <p class="lead">Scegli la risposta giusta. Puoi riprovare finché non la trovi!</p>
+    <div class="levelbar" id="quiz-level"></div>
+    <div id="quiz-box"></div>
+    <div class="progress" id="quiz-prog"></div>
+  </div>
+
+  <!-- SEZIONE 3 — ABBINA -->
+  <div class="card">
+    <h2>🔗 3. Abbina</h2>
+    <p class="lead">Tocca una casella a sinistra, poi la sua coppia a destra. Collega tutte le coppie!</p>
+    <div class="levelbar" id="match-level"></div>
+    <div class="match-grid" id="match-grid"></div>
+    <div class="progress" id="match-prog"></div>
+  </div>
+</div>
+
+<script>
+  function stars(correct,total){
+    const pct=correct/total;
+    const n=pct===1?5:pct>=0.75?4:pct>=0.5?3:pct>=0.25?2:1;
+    return "⭐".repeat(n);
+  }
+  const LV=["Base","Intermedio","Avanzato","Sfida"];
+  function levelBar(level){
+    let dots="";
+    for(let i=0;i<4;i++) dots+=`<span class="lvdot ${i<=level?'on':''}">${i+1}</span>`;
+    return `<div class="lvrow"><b>Livello ${level+1} di 4 · ${LV[level]} 🔓</b><span class="lvdots">${dots}</span></div>`;
+  }
+  function levelResult(progEl, score, total, level, threshold, setFnName){
+    const passed = score>=threshold;
+    let html=`<div class="star">${stars(score,total)}</div>${score}/${total} giuste<br>`;
+    if(passed && level<3){
+      html+=`<b>Bravissima! Livello ${level+2} sbloccato 🔓</b><br>`;
+      html+=`<button class="restart" onclick="${setFnName}(${level+1})">➡️ Vai al Livello ${level+2}</button>`;
+    } else if(passed && level===3){
+      html+=`<b>🏆 Hai completato tutti i livelli!</b><br>`;
+      html+=`<button class="restart" onclick="${setFnName}(0)">🔄 Rigioca dal Livello 1</button>`;
+    } else {
+      html+=`<b>Ci sei quasi! Riprova questo livello, ce la fai 🌱</b><br>`;
+      html+=`<button class="restart" onclick="${setFnName}(${level})">🔄 Rifai il Livello ${level+1}</button>`;
+    }
+    progEl.innerHTML=html;
+  }
+  function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+  function escQ(s){ return String(s).replace(/'/g, "\\'"); }
+
+  /* ============ SEZIONE 1 — CALCOLI ============ */
+  const calcLevels = [
+    [ // L1 — equivalenze base
+      {q:"2 m = ____ cm", a:200, unit:"cm", sol:"Da m a cm moltiplico per 100: 2 × 100 = 200."},
+      {q:"3 kg = ____ g", a:3000, unit:"g", sol:"Da kg a g moltiplico per 1000: 3 × 1000 = 3000."},
+      {q:"500 cm = ____ m", a:5, unit:"m", sol:"Da cm a m divido per 100: 500 ÷ 100 = 5."},
+      {q:"4 km = ____ m", a:4000, unit:"m", sol:"Da km a m moltiplico per 1000: 4 × 1000 = 4000."},
+      {q:"2000 g = ____ kg", a:2, unit:"kg", sol:"Da g a kg divido per 1000: 2000 ÷ 1000 = 2."},
+      {q:"1 m = ____ mm", a:1000, unit:"mm", sol:"Da m a mm moltiplico per 1000: 1 × 1000 = 1000."},
+    ],
+    [ // L2 — equivalenze + tempo + decimali
+      {q:"2 min = ____ s", a:120, unit:"s", sol:"1 min = 60 s → 2 × 60 = 120."},
+      {q:"1 h = ____ s", a:3600, unit:"s", sol:"1 h = 60 min = 60 × 60 = 3600 s."},
+      {q:"1,5 kg = ____ g", a:1500, unit:"g", sol:"1,5 × 1000 = 1500."},
+      {q:"250 cm = ____ m", a:2.5, unit:"m", sol:"250 ÷ 100 = 2,5."},
+      {q:"3,5 m = ____ cm", a:350, unit:"cm", sol:"3,5 × 100 = 350."},
+      {q:"90 s = ____ min", a:1.5, unit:"min", sol:"90 ÷ 60 = 1,5."},
+    ],
+    [ // L3 — densità (trova d)
+      {q:"m = 100 g, V = 20 cm³.  d = ____ g/cm³", a:5, unit:"g/cm³", sol:"d = m/V = 100 ÷ 20 = 5."},
+      {q:"m = 300 g, V = 100 cm³.  d = ____ g/cm³", a:3, unit:"g/cm³", sol:"d = m/V = 300 ÷ 100 = 3."},
+      {q:"m = 60 g, V = 30 cm³.  d = ____ g/cm³", a:2, unit:"g/cm³", sol:"d = m/V = 60 ÷ 30 = 2."},
+      {q:"m = 200 g, V = 25 cm³.  d = ____ g/cm³", a:8, unit:"g/cm³", sol:"d = m/V = 200 ÷ 25 = 8."},
+      {q:"m = 45 g, V = 9 cm³.  d = ____ g/cm³", a:5, unit:"g/cm³", sol:"d = m/V = 45 ÷ 9 = 5."},
+      {q:"m = 150 g, V = 50 cm³.  d = ____ g/cm³", a:3, unit:"g/cm³", sol:"d = m/V = 150 ÷ 50 = 3."},
+    ],
+    [ // L4 — densità inversa + misto
+      {q:"d = 2 g/cm³, V = 10 cm³.  m = ____ g", a:20, unit:"g", sol:"m = d × V = 2 × 10 = 20."},
+      {q:"m = 80 g, d = 4 g/cm³.  V = ____ cm³", a:20, unit:"cm³", sol:"V = m ÷ d = 80 ÷ 4 = 20."},
+      {q:"d = 7,8 g/cm³, V = 10 cm³.  m = ____ g", a:78, unit:"g", sol:"m = d × V = 7,8 × 10 = 78."},
+      {q:"m = 540 g, d = 2,7 g/cm³.  V = ____ cm³", a:200, unit:"cm³", sol:"V = m ÷ d = 540 ÷ 2,7 = 200."},
+      {q:"m = 250 g, V = 50 cm³.  d = ____ g/cm³", a:5, unit:"g/cm³", sol:"d = m ÷ V = 250 ÷ 50 = 5."},
+      {q:"d = 1,2 g/cm³, V = 5 cm³.  m = ____ g", a:6, unit:"g", sol:"m = d × V = 1,2 × 5 = 6."},
+    ],
+  ];
+  let cLevel=0, calcDone=[];
+  function parseNum(s){ return parseFloat(String(s).trim().replace(",", ".").replace(/\s+/g,"")); }
+  function setCalcLevel(lvl){
+    cLevel=lvl;
+    const data=calcLevels[lvl];
+    calcDone=new Array(data.length).fill(false);
+    document.getElementById("calc-level").innerHTML=levelBar(lvl);
+    document.getElementById("calc-prog").textContent=`Completati 0 di ${data.length}`;
+    const list=document.getElementById("calc-list");
+    list.innerHTML=data.map((it,i)=>`
+      <div class="ex">
+        <div class="qnum">Calcolo ${i+1}</div>
+        <div class="qtext">${it.q}</div>
+        <div class="calc-row">
+          <input class="write-input" id="ci${i}" type="text" inputmode="decimal" autocomplete="off" placeholder="numero…">
+          <span class="unit">${it.unit}</span>
+        </div>
+        <button class="checkbtn" onclick="checkCalc(${i})">Controlla</button>
+        <div class="feedback" id="cfb${i}"></div>
+      </div>`).join("");
+  }
+  function checkCalc(i){
+    const it=calcLevels[cLevel][i];
+    const inp=document.getElementById("ci"+i);
+    const fb=document.getElementById("cfb"+i);
+    const val=parseNum(inp.value);
+    const ok = !isNaN(val) && Math.abs(val - it.a) < 0.01;
+    if(ok){
+      inp.classList.add("okbox"); inp.classList.remove("nobox");
+      fb.innerHTML="✅ Perfetto! "+it.sol; fb.className="feedback ok";
+    } else {
+      inp.classList.add("nobox");
+      fb.innerHTML=`💛 Quasi! ${it.sol}<br>La risposta è: <b>${String(it.a).replace(".",",")} ${it.unit}</b>`;
+      fb.className="feedback no";
+    }
+    if(!calcDone[i]){ calcDone[i]=true; updateCalc(); }
+  }
+  function updateCalc(){
+    const data=calcLevels[cLevel];
+    const pr=document.getElementById("calc-prog");
+    const done=calcDone.filter(Boolean).length;
+    if(done<data.length){ pr.textContent=`Completati ${done} di ${data.length}`; return; }
+    let correct=0;
+    data.forEach((it,i)=>{ if(document.getElementById("ci"+i).classList.contains("okbox")) correct++; });
+    levelResult(pr, correct, data.length, cLevel, 4, "setCalcLevel");
+  }
+
+  /* ============ SEZIONE 2 — CONCETTI ============ */
+  const quizLevels = [
+    [ // L1
+      {q:"Chi ha sviluppato il metodo scientifico?", opts:["Galileo Galilei","Cristoforo Colombo","Leonardo da Vinci"], correct:0},
+      {q:"Qual è l'unità di misura della massa nel SI?", opts:["il metro","il kilogrammo","il litro"], correct:1},
+      {q:"Qual è l'unità di misura della lunghezza?", opts:["il secondo","il grammo","il metro"], correct:2},
+      {q:"Con quale strumento misuri la massa?", opts:["la bilancia","il righello","il cronometro"], correct:0},
+      {q:"Il tempo si misura in…", opts:["metri","secondi","kilogrammi"], correct:1},
+      {q:"Una grandezza fisica è…", opts:["qualcosa che si può misurare","un'opinione","un colore"], correct:0},
+    ],
+    [ // L2
+      {q:"La densità si misura in…", opts:["g/cm³ (o kg/m³)","cm²","secondi"], correct:0},
+      {q:"Quale di queste NON è una grandezza fisica?", opts:["la massa","la simpatia","il tempo"], correct:1},
+      {q:"Massa e peso sono la stessa cosa?", opts:["Sì, sempre","No, sono cose diverse","Solo sulla Luna"], correct:1},
+      {q:"Lo strumento per misurare il tempo è…", opts:["il termometro","il cronometro","la bilancia"], correct:1},
+      {q:"Il volume è una grandezza…", opts:["fondamentale","derivata","immaginaria"], correct:1},
+      {q:"Misurare vuol dire…", opts:["indovinare","confrontare con un'unità campione","disegnare"], correct:1},
+    ],
+    [ // L3
+      {q:"Qual è il PRIMO passo del metodo scientifico?", opts:["scrivere la legge","osservare","fare i calcoli"], correct:1},
+      {q:"Qual è la formula della densità?", opts:["d = m × V","d = m / V","d = V / m"], correct:1},
+      {q:"Quale di queste è una grandezza FONDAMENTALE?", opts:["l'area","la lunghezza","la densità"], correct:1},
+      {q:"Per misurare il volume di un liquido uso…", opts:["il cilindro graduato","il righello","la bilancia"], correct:0},
+      {q:"1 g a quanti mg corrisponde?", opts:["10 mg","100 mg","1000 mg"], correct:2},
+      {q:"La notazione scientifica serve a…", opts:["scrivere numeri molto grandi o molto piccoli","colorare i grafici","misurare il tempo"], correct:0},
+    ],
+    [ // L4
+      {q:"Un oggetto galleggia sull'acqua se la sua densità è…", opts:["maggiore di quella dell'acqua","minore di quella dell'acqua","uguale a zero"], correct:1},
+      {q:"Se mantengo la massa ma RADDOPPIO il volume, la densità…", opts:["raddoppia","si dimezza","resta uguale"], correct:1},
+      {q:"Qual è l'ordine giusto del metodo scientifico?", opts:["ipotesi → legge → osservazione","osservazione → ipotesi → esperimento → legge","esperimento → osservazione → ipotesi"], correct:1},
+      {q:"Quale è un SOTTOMULTIPLO del metro?", opts:["il kilometro","il centimetro","il decametro"], correct:1},
+      {q:"La massa di un corpo sulla Terra e sulla Luna…", opts:["è la stessa","è maggiore sulla Luna","è minore sulla Luna"], correct:0},
+      {q:"2,5 m quanti cm sono?", opts:["25 cm","250 cm","2500 cm"], correct:1},
+    ],
+  ];
+  let qLevel=0, qc=0, qs=0, qCorrect=0;
+  function setQuizLevel(lvl){ qLevel=lvl; qc=0; qs=0; document.getElementById("quiz-level").innerHTML=levelBar(lvl); showQuiz(); }
+  function showQuiz(){
+    const data=quizLevels[qLevel];
+    const box=document.getElementById("quiz-box");
+    const pr=document.getElementById("quiz-prog");
+    if(qc>=data.length){ box.innerHTML=""; levelResult(pr, qs, data.length, qLevel, 4, "setQuizLevel"); return; }
+    const it=data[qc];
+    const order=shuffle(it.opts.map((o,i)=>i));
+    const shown=order.map(k=>it.opts[k]);
+    qCorrect=order.indexOf(it.correct);
+    pr.textContent=`Domanda ${qc+1} di ${data.length}`;
+    box.innerHTML=`
+      <div class="ex">
+        <div class="qnum">Domanda ${qc+1}</div>
+        <div class="qtext">${it.q}</div>
+        <div class="options">
+          ${shown.map((o,i)=>`<button class="opt" onclick="quizAns(${i})">${o}</button>`).join("")}
+        </div>
+        <div class="feedback" id="qfb"></div>
+      </div>`;
+  }
+  function quizAns(i){
+    const opts=document.querySelectorAll("#quiz-box .opt");
+    const fb=document.getElementById("qfb");
+    if(i===qCorrect){
+      opts[i].classList.add("correct");
+      fb.textContent="✅ Giusto!"; fb.className="feedback ok";
+      qs++; opts.forEach(o=>o.disabled=true);
+      setTimeout(()=>{ qc++; showQuiz(); },1100);
+    } else {
+      opts[i].classList.add("wrong");
+      fb.textContent="Riprova 🙂"; fb.className="feedback no";
+    }
+  }
+
+  /* ============ SEZIONE 3 — ABBINA ============ */
+  const matchLevels = [
+    [ // L1 grandezza ↔ unità
+      {l:"Lunghezza", r:"metro (m)"},{l:"Massa", r:"kilogrammo (kg)"},{l:"Tempo", r:"secondo (s)"},
+      {l:"Volume", r:"metro cubo (m³)"},{l:"Densità", r:"kg/m³"},{l:"Area", r:"metro quadro (m²)"},
+    ],
+    [ // L2 grandezza ↔ strumento
+      {l:"Massa", r:"bilancia ⚖️"},{l:"Tempo", r:"cronometro ⏱️"},{l:"Lunghezza", r:"righello 📏"},
+      {l:"Volume di un liquido", r:"cilindro graduato 🧪"},{l:"Temperatura", r:"termometro 🌡️"},
+    ],
+    [ // L3 prefisso ↔ valore
+      {l:"kilo (k)", r:"× 1000"},{l:"etto (h)", r:"× 100"},{l:"deca (da)", r:"× 10"},
+      {l:"deci (d)", r:": 10"},{l:"centi (c)", r:": 100"},{l:"milli (m)", r:": 1000"},
+    ],
+    [ // L4 equivalenze
+      {l:"1 m", r:"100 cm"},{l:"1 km", r:"1000 m"},{l:"1 kg", r:"1000 g"},
+      {l:"1 min", r:"60 s"},{l:"1 h", r:"3600 s"},{l:"1 litro", r:"1000 cm³"},
+    ],
+  ];
+  let mLevel=0, selL=null, matched=0, firstTry=0, spoiled;
+  function setMatchLevel(lvl){
+    mLevel=lvl; selL=null; matched=0; firstTry=0; spoiled=new Set();
+    const pairs=matchLevels[lvl];
+    document.getElementById("match-level").innerHTML=levelBar(lvl);
+    const grid=document.getElementById("match-grid");
+    const left=pairs.map((p,i)=>`<button class="match-btn" id="ml${i}" onclick="pickL(${i})">${p.l}</button>`).join("");
+    const order=shuffle(pairs.map((p,i)=>i));
+    const right=order.map(i=>`<button class="match-btn" id="mr${i}" onclick="pickR(${i})">${pairs[i].r}</button>`).join("");
+    grid.innerHTML=`<div class="match-col">${left}</div><div class="match-col">${right}</div>`;
+    document.getElementById("match-prog").textContent=`Coppie collegate: 0 di ${pairs.length}`;
+  }
+  function pickL(i){
+    const btn=document.getElementById("ml"+i);
+    if(btn.classList.contains("done")) return;
+    document.querySelectorAll(".match-btn.sel").forEach(b=>b.classList.remove("sel"));
+    selL=i; btn.classList.add("sel");
+  }
+  function pickR(i){
+    if(selL===null) return;
+    const rBtn=document.getElementById("mr"+i);
+    if(rBtn.classList.contains("done")) return;
+    const lBtn=document.getElementById("ml"+selL);
+    const pairs=matchLevels[mLevel];
+    if(selL===i){
+      lBtn.classList.remove("sel"); lBtn.classList.add("done"); rBtn.classList.add("done");
+      if(!spoiled.has(selL)) firstTry++;
+      selL=null; matched++;
+      const pr=document.getElementById("match-prog");
+      if(matched>=pairs.length){
+        levelResult(pr, firstTry, pairs.length, mLevel, Math.max(pairs.length-1,1), "setMatchLevel");
+      } else {
+        pr.textContent=`Coppie collegate: ${matched} di ${pairs.length}`;
+      }
+    } else {
+      spoiled.add(selL);
+      rBtn.classList.add("flash");
+      setTimeout(()=>rBtn.classList.remove("flash"),500);
+      lBtn.classList.remove("sel"); selL=null;
+    }
+  }
+
+  // avvio
+  setCalcLevel(0);
+  setQuizLevel(0);
+  setMatchLevel(0);
+</script>
+<script>
+  if ('serviceWorker' in navigator) { navigator.serviceWorker.register('./service-worker.js'); }
+</script>
+</body>
+</html>
